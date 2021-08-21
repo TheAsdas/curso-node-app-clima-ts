@@ -1,4 +1,13 @@
 import axios from "axios";
+import { MapboxResponse } from "../@types/mapbox";
+import { principal } from "../helpers/menus";
+
+export interface Lugar {
+  id: string;
+  nombre: string;
+  lon: number;
+  lat: number;
+}
 
 export class Busqueda {
   static historial: string[];
@@ -15,7 +24,7 @@ export class Busqueda {
     };
   }
 
-  static async buscarCiudad(lugar: string): Promise<[]> {
+  static async buscarCiudad(lugar: string): Promise<Lugar[]> {
     //TODO: realizar petición HTTP
     try {
       const instacia = axios.create({
@@ -23,9 +32,13 @@ export class Busqueda {
         params: Busqueda.paramsMapbox,
       });
 
-      const respuesta = await instacia.get("");
-      console.log(respuesta.data);
-      return [];
+      const respuesta = await instacia.get<MapboxResponse>("");
+      return respuesta.data.features.map((lugar) => ({
+        id: lugar.id,
+        nombre: lugar.place_name,
+        lon: lugar.center[0],
+        lat: lugar.center[1],
+      }));
     } catch (error) {
       console.log(error);
       return [];

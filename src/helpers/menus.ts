@@ -1,7 +1,11 @@
 import inquirer from "inquirer";
+import { Lugar } from "../models/busquedas";
 
 type MenuData = inquirer.QuestionCollection;
-type Choices = { value: any; name: string; checked?: boolean }[];
+type MenuLugar = {
+  value: Lugar | null;
+  name: string;
+}[];
 
 const name = "respuesta";
 const appTitle = "App Clima";
@@ -75,6 +79,27 @@ export const confirmar = async (message: string): Promise<boolean> => {
     name,
     message,
   });
+  return respuesta;
+};
+
+export const listarLugares = async (
+  lugares: Lugar[]
+): Promise<Lugar | null> => {
+  const choices: MenuLugar = lugares.map((lugar, i) => ({
+    value: lugar,
+    name: `${i + 1}. `.yellow.bold + `${lugar.nombre}`,
+  }));
+  choices.unshift({
+    value: null,
+    name: `${0}. `.yellow.bold + "Cancelar",
+  });
+  const { respuesta } = await inquirer.prompt({
+    type: "list",
+    name,
+    message: "¿A qué lugar te referías?",
+    choices,
+  });
+
   return respuesta;
 };
 

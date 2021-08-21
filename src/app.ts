@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import colors from "colors";
-import { leer, principal, pausar } from "./helpers/menus";
+import { leer, principal, pausar, listarLugares } from "./helpers/menus";
 import { Busqueda } from "./models/busquedas";
 
 colors;
@@ -15,7 +15,12 @@ const main = async () => {
         continuar = false;
         break;
       case 1:
-        await Busqueda.buscarCiudad(await leer("¿Que cuidad quieres buscar?"));
+        const respuesta = await listarLugares(
+          await Busqueda.buscarCiudad(await leer("¿Qué lugar quieres buscar?"))
+        );
+          
+        console.log(respuesta);
+
         break;
     }
 
