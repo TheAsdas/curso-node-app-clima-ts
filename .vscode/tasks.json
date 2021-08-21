@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "typescript",
+			"tsconfig": "./tsconfig.json",
+			"option": "watch",
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"group": "build",
+			"label": "tsc: watch",
+			"runOptions": {
+				"runOn": "folderOpen"
+			}
+		},
+		{
+			"label": "ts-cleaner: watch",
+			"type": "shell",
+			"command": "npx ts-cleaner -w",
+			"runOptions": {
+				"runOn": "folderOpen"
+			}
+		}
+	]
+}
