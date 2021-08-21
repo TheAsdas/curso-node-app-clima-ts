@@ -1,12 +1,15 @@
 import inquirer from "inquirer";
 
-
 type MenuData = inquirer.QuestionCollection;
 type Choices = { value: any; name: string; checked?: boolean }[];
 
 const name = "respuesta";
+const appTitle = "App Clima";
 
-export const leer = async (message: string, titulo?: string) => {
+export const leer = async (
+  message: string,
+  titulo?: string
+): Promise<string> => {
   if (titulo) mostrarCabecera(titulo);
   const { respuesta } = await inquirer.prompt({
     type: "input",
@@ -38,15 +41,13 @@ export const principal = async (): Promise<number> => {
     name,
     message: " Selecciona una opción:",
     choices: [
-      { value: 1, name: "1. ".yellow.bold + "Crear tarea" },
-      { value: 2, name: "2. ".yellow.bold + "Listar tareas" },
-      { value: 3, name: "3. ".yellow.bold + "Completar tareas" },
-      { value: 4, name: "4. ".yellow.bold + "Borrar tareas" },
+      { value: 1, name: "1. ".yellow.bold + "Buscar cuidad" },
+      { value: 2, name: "2. ".yellow.bold + "Historial" },
       { value: 0, name: "0. ".yellow.bold + "Guardar y salir" },
     ],
   };
 
-  mostrarCabecera("Tareas pendientes: menú principal");
+  mostrarCabecera(`${appTitle}: menú principal`);
   const { respuesta } = await inquirer.prompt(question);
   return respuesta;
 };
