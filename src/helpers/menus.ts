@@ -125,7 +125,7 @@ const separador = (largo = 10) => {
  * Imprime un título por consola al usuario.
  * @param titulo Titulo para mostrar
  */
-const mostrarCabecera = (titulo: string) => {
+export const mostrarCabecera = (titulo: string) => {
   const _largoTitulo = titulo.length;
 
   console.clear();
