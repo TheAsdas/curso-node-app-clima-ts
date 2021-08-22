@@ -103,6 +103,25 @@ export const listarLugares = async (
   return respuesta;
 };
 
+export const listarHistorial = async (
+  lugares: Lugar[]
+): Promise<Lugar | null> => {
+  const choices: MenuLugar = lugares.map((l, i) => ({
+    value: l,
+    name: `${i + 1}. `.green.bold + l.nombre,
+  }));
+  choices.unshift({ value: null, name: `${0}. `.green.bold + "Salir" });
+
+  const { respuesta } = await inquirer.prompt({
+    type: "list",
+    name,
+    message: "Selecciona una entrada para ver el clima actual:",
+    choices,
+  });
+
+  return respuesta;
+};
+
 /**
  * # Crear línea separadora.
  * Crea una línea separadora de un largo especificado, o de largo 10 si

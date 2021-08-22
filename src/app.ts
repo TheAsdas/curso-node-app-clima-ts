@@ -39,15 +39,14 @@ const main = async () => {
             Busqueda.mostrarClima(clima);
           }
         }
-
+        
+        await pausar();
         break;
 
       case 2:
-        Busqueda.mostrarHistorial();
+        await Busqueda.mostrarHistorial();
         break;
     }
-
-    await pausar();
   }
 };
 

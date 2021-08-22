@@ -1,7 +1,7 @@
 import axios from "axios";
 import { existsSync, readFileSync, mkdirSync, writeFileSync } from "fs";
 
-import { mostrarCabecera } from "../helpers/menus";
+import { mostrarCabecera, listarHistorial, pausar } from "../helpers/menus";
 import { MapboxResponse } from "../@types/mapbox";
 import { OpenWeatherResponse } from "../@types/openweather";
 
@@ -150,11 +150,25 @@ export class Busqueda {
     }
   }
 
-  static mostrarHistorial() {
-    console.clear();
-    mostrarCabecera("App Clima: Historial");
-    this.historial.forEach((h, i) =>
-      console.log(`${i + 1}.`.green.bold, h.nombre)
-    );
+  static async mostrarHistorial() {
+    let continuar = true;
+
+    // this.historial.forEach((h, i) =>
+    //   console.log(`${i + 1}.`.green.bold, h.nombre)
+    // );
+    while (continuar) {
+      console.clear();
+      mostrarCabecera("App Clima: Historial");
+
+      const lugar = await listarHistorial(this.historial);
+
+      if (!lugar) break;
+      else {
+        this.guardarHistorial(lugar);
+        const clima = await this.clima(lugar);
+        if (clima) this.mostrarClima(clima);
+        await pausar();
+      }
+    }
   }
 }
